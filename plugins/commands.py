@@ -22,32 +22,6 @@ async def start(bot, cmd):
                         parse_mode="markdown",
                         disable_web_page_preview=True
                     )
-                    return
-            except UserNotParticipant:
-                ident, file_id = cmd.text.split("_-_-_-_")
-                await bot.send_message(
-                    chat_id=cmd.from_user.id,
-                    text="**Please Join My Updates Channel to use this Bot!**",
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
-                            ],
-                            [
-                                InlineKeyboardButton(" 🔄 Try Again", callback_data=f"checksub#{file_id}")
-                            ]
-                        ]
-                    ),
-                    parse_mode="markdown"
-                )
-                return
-            except Exception:
-                await bot.send_message(
-                    chat_id=cmd.from_user.id,
-                    text="Something went Wrong.",
-                    parse_mode="markdown",
-                    disable_web_page_preview=True
-                )
                 return
         try:
             ident, file_id = cmd.text.split("_-_-_-_")
@@ -80,18 +54,6 @@ async def start(bot, cmd):
             await cmd.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
     elif len(cmd.command) > 1 and cmd.command[1] == 'subscribe':
         invite_link = await bot.create_chat_invite_link(int(AUTH_CHANNEL))
-        await bot.send_message(
-            chat_id=cmd.from_user.id,
-            text="**Please Join My Updates Channel to use this Bot!**",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
-                    ]
-                ]
-            )
-        )
-    else:
         await cmd.reply_text(
             START_MSG,
             parse_mode="Markdown",
